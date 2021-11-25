@@ -9,16 +9,22 @@ const App = () => {
   // const contadorValue = contador[0]
   // const updateContador = contador[1]
   const [contador, updateContador] = useState(0)
+  const [click, setClick] = useState([])
+
   const handleClickIncrement = () => {
     updateContador(contador + 1)
+    setClick(prevClick => [...prevClick + 1])
   }
   const handleClickDecrement = () => {
     updateContador(contador - 1)
+    setClick(prevClick => [...prevClick +   1])
+
   }
   const handleClickReset = () => {
     // updateContador(contador - contador)
     updateContador(0)
   }
+
   // setInterval(() => {
   //   updateContador(contadorValue+1)
   // }, 2000)
@@ -50,7 +56,7 @@ const App = () => {
         }>Incrementar</button>
         <button onClick={ handleClickDecrement }>Decrementar</button>
         <button onClick={ handleClickReset }>Reset</button>
-
+        <p>{click.length}</p>
     </>
   )
 
