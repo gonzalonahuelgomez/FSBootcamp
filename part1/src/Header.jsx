@@ -1,9 +1,10 @@
 // const Header = ({course}) =>  <h1>{course}</h1>  Forma Corta
 
-const Header = (props) => {
+const Header = ({course}) => {
+    let {name} = course
     return (
         <div>
-           <h1>{props.course}</h1> 
+           <h1>{name}</h1> 
         </div>
     )
 }

@@ -20,27 +20,85 @@ L.tileLayer(
 
 function onEachFeature(feature, layer) {
   // does this feature have a property named popupContent?
-  layer.on('click', onMarkerClick)
+  // layer.on('click', onMarkerClick)
+  // console.log(prov)
+
+  prov.eachLayer(e => {
+    // console.log(feature.geometry.coordinates)
+    console.log(e)
+
+  }
+    )
+
 }
 
 const prov_url = "https://wms.ign.gob.ar/geoserver/unidades-territoriales/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=unidades-territoriales%3Aprovincia&outputFormat=application%2Fjson", 
       antena_url = "https://wms.ign.gob.ar/geoserver/ign/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ign%3Apuntos_de_comunicacion_AT010&maxFeatures=50&outputFormat=application%2Fjson"
 
-const prov = L.geoJSON().addTo(map),
-      antena = L.geoJSON([],{
-        onEachFeature: onEachFeature
-      }).addTo(map)
+let   prov = L.geoJSON([]).addTo(map),
+      antena = L.geoJSON([]).addTo(map)
 
-$.getJSON(prov_url).then((res) => {
-    prov.addData(res)
-  });
-
-$.getJSON(antena_url).then((res) => {
-  antena.addData(res)
-});
   
 function onMarkerClick(prop) {
-  prov.eachLayer(e => console.log(e.contains([prop.latlng])))
+  // console.log(prop.latlng)
+  
 }
 
 var popup = L.popup();
+
+
+// let myPromise = new Promise(function(myResolve, myReject) {
+//   // "Producing Code" (May take some time)
+
+
+//     myResolve(antena,prov); // when successful
+//     myReject();  // when error
+//   });
+
+//   myPromise.then(
+//     function(a,p) { 
+//       // console.log(
+//         a.eachLayer(e => {
+//           // console.log(feature.geometry.coordinates)
+//           console.log('ñ')
+    
+//         })
+
+//       // )
+
+//      },
+//     function() { console.log('error') }
+//   );
+
+$.getJSON(prov_url).then((res) => {
+  prov.addData(res)
+}).then(function(){
+  $.getJSON(antena_url).then((res) => {
+    antena.addData(res)
+  }).then(function(){
+    antena.eachLayer(ant => {
+      prov.eachLayer(e => {
+        
+        console.log(e.contains(ant.feature.geometry.coordinates))
+          
+      })
+      break;
+    })
+  });
+});
+
+
+
+
+// async function myFunction() {
+
+
+
+//   return prov;
+// }
+
+// myFunction().then(
+  
+//     setTimeout(function(a) {
+//       },2000)
+// );
