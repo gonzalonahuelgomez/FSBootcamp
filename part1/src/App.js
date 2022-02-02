@@ -1,5 +1,6 @@
 import './App.css';
 import { useState } from 'react';
+import Display from './Display';
 // import Content from './Content';
 // import Header from './Header.jsx';
 // import Total from './Total';
@@ -56,15 +57,9 @@ const App = () => {
   // );
   return (
     <>
-      <h1>{contador}</h1>
-      <button onClick={ handleClickIncrement
-        // () => { 
-        // updateContador(contador + 1)
-        // updateContador(prevContador => {
-        //   return prevContador + 1
-        // })
-        // }
-        }>Incrementar</button>
+      {/* <h1>{contador}</h1> */}
+      <Display contador={contador}/>
+      <button onClick={ handleClickIncrement }>Incrementar</button>
         <button onClick={ handleClickDecrement }>Decrementar</button>
         <button onClick={ handleClickReset }>Reset</button>
         <p>{click.length}</p>
