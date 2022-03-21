@@ -1,5 +1,3 @@
-const Display = (props) => {
-  return <h1>{props.contador}</h1>;
-};
+const Display = ({contador}) => <h1>{contador}</h1>
 
 export default Display;
