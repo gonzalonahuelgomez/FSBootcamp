@@ -4,6 +4,23 @@ import { useState } from 'react';
 // import Content from './Content';
 // import Header from './Header.jsx';
 // import Total from './Total';
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+  
+  return (
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
+  )
+}
+
 const Hello = ({ first, second = 30 }) => {
   const bornYear = () => new Date().getFullYear() - second
 
@@ -27,22 +44,34 @@ const App = () => {
   // const updateContador = contador[1]
   const [contador, updateContador] = useState(0)
   const [click, setClick] = useState([])
-  const [clicks, setClicks] = useState({left: 0, right: 0})
+  // const [clicks, setClicks] = useState({left: 0, right: 0})
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAllClicks] = useState([])
 
+  // const handleLeftClick = () => {
+  //   const newClicks = {
+  //     ...clicks,
+  //     left: clicks.left + 1
+  //   }
+  //   setClicks(newClicks)
+  // }
+
+  // const handleRightClick = () => {
+  //   const newClicks = {
+  //     ...clicks,
+  //     right: clicks.right + 1
+  //   }
+  //   setClicks(newClicks)
+  // }
   const handleLeftClick = () => {
-    const newClicks = {
-      ...clicks,
-      left: clicks.left + 1
-    }
-    setClicks(newClicks)
+    setLeft(left+1)
+    setAllClicks(allClicks.concat('L'))
   }
 
   const handleRightClick = () => {
-    const newClicks = {
-      ...clicks,
-      right: clicks.right + 1
-    }
-    setClicks(newClicks)
+    setRight(right+1)
+    setAllClicks(allClicks.concat('R'))
   }
 
   const handleClickIncrement = () => {
@@ -97,10 +126,11 @@ const App = () => {
       <Button handleClick={ handleClickReset } text="Reset" />
       <p>{click.length}</p>
       <Hello name="Ort"/>
-      {clicks.left}
+      {left}
       <Button handleClick={ handleLeftClick } text="Left" />
       <Button handleClick={ handleRightClick } text="Right" />
-      {clicks.right}
+      {right}
+      <History allClicks={allClicks} />
     </>
   )
 
