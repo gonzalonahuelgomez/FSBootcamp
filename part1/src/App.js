@@ -27,6 +27,23 @@ const App = () => {
   // const updateContador = contador[1]
   const [contador, updateContador] = useState(0)
   const [click, setClick] = useState([])
+  const [clicks, setClicks] = useState({left: 0, right: 0})
+
+  const handleLeftClick = () => {
+    const newClicks = {
+      ...clicks,
+      left: clicks.left + 1
+    }
+    setClicks(newClicks)
+  }
+
+  const handleRightClick = () => {
+    const newClicks = {
+      ...clicks,
+      right: clicks.right + 1
+    }
+    setClicks(newClicks)
+  }
 
   const handleClickIncrement = () => {
     updateContador(contador + 1)
@@ -80,6 +97,10 @@ const App = () => {
       <Button handleClick={ handleClickReset } text="Reset" />
       <p>{click.length}</p>
       <Hello name="Ort"/>
+      {clicks.left}
+      <Button handleClick={ handleLeftClick } text="Left" />
+      <Button handleClick={ handleRightClick } text="Right" />
+      {clicks.right}
     </>
   )
 
