@@ -1,66 +1,136 @@
 import './App.css';
 import { useState } from 'react';
+// import Display from './Display';
+// import Content from './Content';
+// import Header from './Header.jsx';
+// import Total from './Total';
 
-const Button = ({ handleClick, text }) => <button onClick={ handleClick }>{ text }</button>
-
-const Display = ({text, value}) => <h1>{text} {value}</h1>
-
-const Statistic = ({text, value}) => <tr><td>{text}</td><td>{value}</td></tr>
-
-const Statistics = ({good, neutral, bad, all}) => {
-  const average = (good - bad) / all;
-  const positive = good / all * 100;
-  return (
-    <div>
-      <h2>Statistics</h2>
-      { all === 0 ? <p>No feedback given</p> : 
-      <table>
-        <tbody>
-          <Statistic text="good" value={good} />
-          <Statistic text="neutral" value={neutral} />
-          <Statistic text="bad" value={bad} />
-          <Statistic text="all" value={all} />
-          <Statistic text="average" value={average} />
-          <Statistic text="positive" value={positive} />
-        </tbody>
-      </table>
-      }
-      
-    </div>
-  )
-  }
-
-const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
-  const [average, setAverage] = useState(0)
-  const [positive, setPositive] = useState(0)
-  const handleClickGood = () => {
-    setGood(good + 1)
-    setAll(all + 1)
-    setAverage(average + 1)
-    setPositive(positive + 1)
-  }
- const handleClickNeutral = () => {
-    setNeutral(neutral + 1)
-    setAll(all + 1)
-  }
-  const handleClickBad = () => {
-    setBad(bad + 1)
-    setAll(all + 1)
-    setAverage(average - 1)
-    setPositive(positive - 1)
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
   }
   
   return (
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
+  )
+}
+
+const Hello = ({ first, second = 30 }) => {
+  const bornYear = () => new Date().getFullYear() - second
+
+  return (
+    <div>
+      <p>
+        Hello {first}, you are {second} years old
+      </p>
+      <p>So you were probably born in {bornYear()}</p>
+    </div>
+  )
+}
+
+const Button = ({ handleClick, text }) => <button onClick={ handleClick }>{ text }</button>
+
+const Display = ({contador}) => <h1>{contador}</h1>
+
+const App = () => {
+  // const contador = useState(0)
+  // const contadorValue = contador[0]
+  // const updateContador = contador[1]
+  const [contador, updateContador] = useState(0)
+  const [click, setClick] = useState([])
+  // const [clicks, setClicks] = useState({left: 0, right: 0})
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAllClicks] = useState([])
+
+  // const handleLeftClick = () => {
+  //   const newClicks = {
+  //     ...clicks,
+  //     left: clicks.left + 1
+  //   }
+  //   setClicks(newClicks)
+  // }
+
+  // const handleRightClick = () => {
+  //   const newClicks = {
+  //     ...clicks,
+  //     right: clicks.right + 1
+  //   }
+  //   setClicks(newClicks)
+  // }
+  const handleLeftClick = () => {
+    setLeft(left+1)
+    setAllClicks(allClicks.concat('L'))
+  }
+
+  const handleRightClick = () => {
+    setRight(right+1)
+    setAllClicks(allClicks.concat('R'))
+  }
+
+  const handleClickIncrement = () => {
+    updateContador(contador + 1)
+    setClick(click + 1)
+  }
+  const handleClickDecrement = () => {
+    updateContador(contador - 1)
+    setClick(click + 1)
+  }
+  const handleClickReset = () => {
+    // updateContador(contador - contador)
+    updateContador(0)
+    setClick(click + 1)
+  }
+
+  // setInterval(() => {
+  //   updateContador(contadorValue+1)
+  // }, 2000)
+  // const course = {
+  //   name: 'Half Stack application development',
+  //   parts: [
+  //     {
+  //       name: 'Fundamentals of React',
+  //       exercises: 10
+  //     },
+  //     {
+  //       name: 'Using props to pass data',
+  //       exercises: 7
+  //     },
+  //     {
+  //       name: 'State of a component',
+  //       exercises: 14
+  //     }
+  //   ]
+  // }
+
+
+  // return (
+  //   <>
+  //   <Header course={course} />
+  //   <Content course={course}/>
+  //   <Total course={course}/>
+  //   </>
+  // );
+  return (
     <>
-      <h1>give feedback</h1>
-      <Button handleClick={handleClickGood} text='good' />
-      <Button handleClick={handleClickNeutral} text='neutral' />
-      <Button handleClick={handleClickBad} text='bad' />
-      <Statistics good={good} neutral={neutral} bad={bad} all={all} />
+      {/* <h1>{contador}</h1> */}
+      <Display contador={contador}/>
+      <Button handleClick={ handleClickIncrement } text="Incrementar" />
+      <Button handleClick={ handleClickDecrement } text="Decrementar" />
+      <Button handleClick={ handleClickReset } text="Reset" />
+      <p>{click.length}</p>
+      <Hello name="Ort"/>
+      {left}
+      <Button handleClick={ handleLeftClick } text="Left" />
+      <Button handleClick={ handleRightClick } text="Right" />
+      {right}
+      <History allClicks={allClicks} />
     </>
   )
 
