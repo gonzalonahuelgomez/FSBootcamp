@@ -3,8 +3,6 @@ import { useState } from 'react';
 
 const Button = ({ handleClick, text }) => <button onClick={ handleClick }>{ text }</button>
 
-const Display = ({text, value}) => <h1>{text} {value}</h1>
-
 const Statistic = ({text, value}) => <tr><td>{text}</td><td>{value}</td></tr>
 
 const Statistics = ({good, neutral, bad, all}) => {
