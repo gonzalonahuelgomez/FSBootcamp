@@ -9,8 +9,10 @@ const App = ({notes}) => {
  
   return (
     <div>
-      {/* <Notes notes={notes} /> */}
-      {notes.map(note => <li key={note.id}>{note.content}</li>)}
+      <ul>
+        {/* <Notes notes={notes} /> */}
+        {notes.map(note => <li key={note.id}>{note.content}</li>)}
+      </ul>
     </div>
   )
 }
