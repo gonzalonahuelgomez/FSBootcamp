@@ -1,20 +1,28 @@
-import './App.css';
-import { useState } from 'react';
+import { useState } from 'react'
+import Note from './components/Note'
 
-const Notes = ({notes}) => {
-  return notes.map(note => <li key={note.id}>{note.content}</li>)
-}
+const App = (props) => {
+  const [notes, setNotes] = useState(props.notes)
 
-const App = ({notes}) => {
- 
+  const addNote = (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+  }
+
   return (
     <div>
+      <h1>Notes</h1>
       <ul>
-        {/* <Notes notes={notes} /> */}
-        {notes.map(note => <li key={note.id}>{note.content}</li>)}
+        {notes.map(note => 
+          <Note key={note.id} note={note} />
+        )}
       </ul>
+      <form onSubmit={addNote}>
+        <input />
+        <button type="submit">save</button>
+      </form>   
     </div>
   )
 }
 
-export default App;
+export default App
