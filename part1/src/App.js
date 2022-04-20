@@ -5,14 +5,13 @@ import Countries from './components/Countries'
 
 const App = () => {
   
-  const [countries, setCountries] = useState([]) 
+  const [countries, setCountries] = useState([])
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
     axios
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        console.log(response.data)
         setCountries(response.data)
       })
   }, [])
@@ -24,7 +23,7 @@ const App = () => {
   return (
     <div>
       <Filter name={filter} onChange={handleFilterChange}/>
-      {filter.length > 10 ? <p>Too many matches, specify another filter</p> : <Countries countries={countries} filter={filter} />}
+      <Countries countries={countries} filter={filter} />
     </div>
   )
 }
