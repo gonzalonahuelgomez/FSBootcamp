@@ -10,8 +10,8 @@ const Countries = ({countries, filter}) => {
             <p>capital {filteredCountry.capital}</p>
             <p>area {filteredCountry.area}</p>
             <h5>languages:</h5>
-            {/* {filteredCountry.languages.map(language => <li key={language.name}>{language.name}</li>)} */}
-            {console.log(filteredCountry.languages)}
+            {/* {Object.values(filteredCountry.languages).map(language => <li key={language}>{language}</li>)} */}
+            {Object.entries(filteredCountry.languages).map(([key,language]) => <li key={key}>{language}</li>)}
             <img src={filteredCountry.flags.png} alt={`${filteredCountry.name.common} flag`}/>
         </div>
         
