@@ -1,63 +1,30 @@
-import { useState, useEffect } from 'react'
+import { useState,useEffect } from 'react'
 import axios from 'axios'
-import Note from './components/Note'
+import Filter from './components/Filter'
+import Countries from './components/Countries'
 
 const App = () => {
-  const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('')
-  const [showAll, setShowAll] = useState(true)
+  
+  const [countries, setCountries] = useState([]) 
+  const [filter, setFilter] = useState('')
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/notes')
+      .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        setNotes(response.data)
+        console.log(response.data)
+        setCountries(response.data)
       })
   }, [])
-  console.log(notes);
-
-  const addNote = (event) => {
-    event.preventDefault()
-    const noteObject = {
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() > 0.5,
-      id: notes.length + 1,
-    }
-
-    setNotes(notes.concat(noteObject))
-    setNewNote('')
+  
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value)
   }
-
-  const handleNoteChange = (event) => {
-    console.log(event.target.value)
-    setNewNote(event.target.value)
-  }
-
-  const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important)
-
+  
   return (
     <div>
-      <h1>Notes</h1>
-      <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? 'important' : 'all' }
-        </button>
-      </div>   
-      <ul>
-        {notesToShow.map(note => 
-          <Note key={note.id} note={note} />
-        )}
-      </ul>
-      <form onSubmit={addNote}>
-        <input
-          value={newNote}
-          onChange={handleNoteChange}
-        />
-        <button type="submit">save</button>
-      </form>
+      <Filter name={filter} onChange={handleFilterChange}/>
+      {filter.length > 10 ? <p>Too many matches, specify another filter</p> : <Countries countries={countries} filter={filter} />}
     </div>
   )
 }
