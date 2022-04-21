@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.4.0",
     "json-server": "^0.17.0"
   }
 }
