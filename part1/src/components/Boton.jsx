@@ -1,7 +1,0 @@
-const Boton = ({text, handleClick}) => {
-  return (
-    <button onClick={handleClick}>{text}</button>
-  )
-}
-
-export default Boton
