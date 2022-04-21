@@ -1,7 +1,7 @@
 const Filter = ({name, onChange}) => {
   return (
     <>
-      find countries<input value={name} onChange={onChange} />
+      filter shown <input value={name} onChange={onChange} />
     </>
   )
 }
