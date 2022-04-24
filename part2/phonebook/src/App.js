@@ -21,6 +21,22 @@ const App = () => {
       })
   }, [])
 
+  const updatePerson = (person) => {
+    if(window.confirm(`${person.name} is already added to phonebook, replace the old one number with a new one?`))
+      personServices.updatePerson(person.id,person)      
+      window.location.reload()
+  }
+
+  const createPerson = (person) => {
+    personServices
+    .createPerson(person)
+    .then(returnedPerson => {
+      setPersons(persons.concat(returnedPerson))
+      setNewName('')
+      setNewNumber('')
+    })
+  }
+
   const addPerson = (event) => {
     event.preventDefault()
     const personObject = {
@@ -28,14 +44,9 @@ const App = () => {
       name: newName,
       number: newNumber,
     }
-    persons.map(person => person.name).includes(newName) ? alert(`${newName} is already added to phonebook`) : 
-    personServices
-      .createPerson(personObject)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
+    persons.map(person => person.name).includes(newName) ? 
+      updatePerson(personObject) : 
+      createPerson(personObject)      
   }
   
   const handleNameChange = (event) => {
