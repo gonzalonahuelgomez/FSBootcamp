@@ -49,7 +49,7 @@ const App = () => {
         }, 5000)
         .catch(error => {
           setErrorMessage(
-            `${person.name} was already removed from server`
+            `Cant update ${person.name} number`
           )
           setClassMessage('error')
           setTimeout(() => {
