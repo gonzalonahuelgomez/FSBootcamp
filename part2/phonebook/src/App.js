@@ -35,27 +35,32 @@ const App = () => {
       })
   }, [])
 
+  const setSuccess = message => {
+    setErrorMessage(message)
+    setClassMessage('success')
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)
+  }
+
+  const setError = message => {
+    setErrorMessage(message)
+    setClassMessage('error')
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 5000)
+  }
+
   const updatePerson = (person) => {
+    debugger
     if(window.confirm(`${person.name} is already added to phonebook, replace the old one number with a new one?`))
       personServices
       .updatePerson(person.id,person)
       .then(updatedNumber => {
-        setErrorMessage(
-          `Updated ${updatedNumber.name} number, please reload the page`
-        )
-        setClassMessage('success')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-        .catch(error => {
-          setErrorMessage(
-            `Cant update ${person.name} number`
-          )
-          setClassMessage('error')
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000)
+        setSuccess(`Updated ${updatedNumber.name} number, please reload the page`)
       })
+      .catch(error => {
+          setError(`Cant update ${person.name} number`)          
       })      
   }
 
@@ -66,21 +71,9 @@ const App = () => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
-      setErrorMessage(
-        `Added ${person.name}`
-      )
-      setClassMessage('success')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      setSuccess(`Added ${person.name}`)      
     }).catch(error => {
-      setErrorMessage(
-        `Cant add ${person.name}`
-      )
-      setClassMessage('error')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      setError(`Cant add ${person.name}`)     
     })
   }
 
@@ -89,22 +82,10 @@ const App = () => {
         personServices
             .deletePerson(person.id)
             .then(deletedPerson => {
-                setErrorMessage(
-                    `Deleted ${deletedPerson.name}, please reload the page`
-                  )
-                  setClassMessage('success')
-                  setTimeout(() => {
-                    setErrorMessage(null)
-                  }, 5000)
+              setSuccess(`Deleted, please reload the page`)                 
             })
             .catch(error => {
-                setErrorMessage(
-                  `${person.name} was already removed from server`
-                )
-                setClassMessage('error')
-                setTimeout(() => {
-                  setErrorMessage(null)
-                }, 5000)
+                setError(`${person.name} was already removed from server`)                
             })
     }
   }
@@ -112,7 +93,7 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     const personObject = {
-      id: ++CONTADOR,
+      id: CONTADOR++,
       name: newName,
       number: newNumber,
     }
