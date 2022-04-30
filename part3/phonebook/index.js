@@ -40,7 +40,9 @@ app.get('/api/persons/:id',(request, response) => {
 })
 
 app.get('/api/info',(request,response) => {
-    response.json(persons)
+    const manyEntries = persons.length
+    const date = new Date()
+    response.send(`Phonebook has info for ${manyEntries} people<br/>${date}`)
 })
 
 const PORT = 3001
