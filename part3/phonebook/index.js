@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const persons =
+let persons =
 [
     { 
       "id": 1,
@@ -43,6 +43,29 @@ app.get('/api/info',(request,response) => {
     const manyEntries = persons.length
     const date = new Date()
     response.send(`Phonebook has info for ${manyEntries} people<br/>${date}`)
+})
+
+const generateId = () => {
+  return persons.length > 0 ? Math.floor(Math.random() * 999) : 0
+}
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+  if(!body.name)
+    response.status(404)
+  
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId()
+  }
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
 })
 
 const PORT = 3001
