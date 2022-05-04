@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
 let persons =
 [
     { 
@@ -46,7 +47,9 @@ app.get('/api/info',(request,response) => {
 })
 
 const generateId = () => {
-  return persons.length > 0 ? Math.floor(Math.random() * 999) : 0
+  const min = Math.max(...persons.map(person => person.id))
+  const id = persons.length > 0 ? Math.floor(Math.random() * (999 - min) + min) : 0
+  return id
 }
 
 app.post('/api/persons', (request, response) => {
@@ -59,6 +62,10 @@ app.post('/api/persons', (request, response) => {
     number: body.number,
     id: generateId()
   }
+
+  persons = persons.concat(person)
+
+  response.json(person)
 })
 
 app.delete('/api/persons/:id', (request, response) => {
